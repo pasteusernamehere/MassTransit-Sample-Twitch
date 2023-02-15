@@ -1,19 +1,22 @@
-namespace Sample.Api
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Hosting;
+using Sample.Api;
+
+var app = WebApplication.CreateBuilder(args)
+    .RegisterServices()
+    .Build();
+
+
+if (app.Environment.IsDevelopment())
 {
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.Extensions.Hosting;
-
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args)
-        {
-            return Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
-        }
-    }
+    app.UseDeveloperExceptionPage();
+    app.UseSwagger();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sample.Api v1"));
 }
+
+app.UseHttpsRedirection();
+app.UseRouting();
+app.UseAuthorization();
+app.MapControllers();
+
+app.Run();

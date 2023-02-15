@@ -1,12 +1,11 @@
-namespace Sample.Contracts
-{
-    using System;
+namespace Sample.Contracts;
 
-    public interface IOrderSubmissionRejected
-    {
-        Guid OrderId { get; }
-        DateTime Timestamp { get; }
-        string CustomerNumber { get; }
-        string Reason { get; }
-    }
+using System;
+
+public interface IOrderSubmissionRejected
+{
+    Guid OrderId { get; }
+    DateTime Timestamp { get; }
+    string CustomerNumber { get; }
+    string Reason { get; }
 }

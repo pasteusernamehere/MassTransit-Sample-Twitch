@@ -10,14 +10,14 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
-        <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.12" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+        <PackageReference Include="MassTransit.AspNetCore" Version="7.3.1"/>
+        <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.12"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Sample.Components\Sample.Components.csproj" />
-        <ProjectReference Include="..\Sample.Contracts\Sample.Contracts.csproj" />
+        <ProjectReference Include="..\Sample.Components\Sample.Components.csproj"/>
+        <ProjectReference Include="..\Sample.Contracts\Sample.Contracts.csproj"/>
     </ItemGroup>
 
 </Project>
