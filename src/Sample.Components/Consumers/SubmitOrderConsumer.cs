@@ -18,7 +18,7 @@ namespace Sample.Components.Consumers
         {
             _logger.Log(LogLevel.Debug, "{Consumer}: {CustomerNumber}", nameof(SubmitOrderConsumer),
                 context.Message.CustomerNumber);
-            
+
             //Implement validation etc... reach out to repositories...  
 
             if (context.Message.CustomerNumber.Contains("TEST"))
@@ -33,7 +33,7 @@ namespace Sample.Components.Consumers
 
                 return;
             }
-            
+
             await context.RespondAsync<IOrderSubmissionAccepted>(new
             {
                 context.Message.OrderId,
