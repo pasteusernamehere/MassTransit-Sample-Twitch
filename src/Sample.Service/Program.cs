@@ -33,9 +33,10 @@ internal class Program
                 services.AddMassTransit(x =>
                 {
                     x.AddConsumersFromNamespaceContaining<SubmitOrderConsumer>();
-                    x.UsingRabbitMq((context,cfg) =>
+                    x.UsingRabbitMq((context, cfg) =>
                     {
-                        cfg.Host("localhost", "/", h => {
+                        cfg.Host("localhost", "/", h =>
+                        {
                             h.Username("guest");
                             h.Password("guest");
                         });

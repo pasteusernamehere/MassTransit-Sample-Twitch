@@ -1,12 +1,12 @@
 namespace Sample.Api
 {
-    using Components.Consumers;
     using Contracts;
     using MassTransit;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
     using Microsoft.Extensions.Hosting;
     using Microsoft.OpenApi.Models;
 
@@ -22,12 +22,22 @@ namespace Sample.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
             services.AddMassTransit(x =>
             {
-                x.AddConsumer<SubmitOrderConsumer>();
-                //x.AddMediator(cfg => { cfg.AddConsumer<SubmitOrderConsumer>(); });
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host("localhost", "/", h =>
+                    {
+                        h.Username("guest");
+                        h.Password("guest");
+                    });
+
+                    // No endpoints to configure as only requests are being made from this service
+                    //cfg.ConfigureEndpoints(context);
+                });
+
                 x.AddRequestClient<ISubmitOrder>();
-                x.UsingInMemory((context, cfg) => { cfg.ConfigureEndpoints(context); });
             });
 
             services.AddSwaggerGen(c =>

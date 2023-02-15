@@ -23,6 +23,15 @@ namespace Sample.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(Guid id, string customerNumber)
         {
+            //Uses request client to send the request and awaits the response
+            //Sample.Api makes request (Publish)
+            //  => Sample.Service (Subscribes) via SubmitOrderConsumer
+            //     Sample.Service consumes the message published by Sample.Api
+            //     it does some work, validation, lookups etc
+            //     Sample.Service eventually responds with its own message be it accepted or rejected
+            //     RequestClient waits for this response
+            //     All channels/exchanges/queues are managed by GetResponse(IRequestClient) and RespondAsync(IConsumer)
+            //and then responds with an appropriate message
             var (accepted, rejected) =
                 await _submitOrderRequestClient.GetResponse<IOrderSubmissionAccepted, IOrderSubmissionRejected>(new
                 {
