@@ -1,9 +1,36 @@
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Sample.Api;
+using Sample.Contracts;
 
 var app = WebApplication.CreateBuilder(args)
-    .RegisterServices()
+    .ConfigureServices(services =>
+    {
+        services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
+        services.AddMassTransit(x =>
+        {
+            x.UsingRabbitMq((context, cfg) =>
+            {
+                cfg.Host("localhost", "/", h =>
+                {
+                    h.Username("guest");
+                    h.Password("guest");
+                });
+
+                // No endpoints to configure as only requests are being made from this service
+                //cfg.ConfigureEndpoints(context);
+            });
+
+            x.AddRequestClient<ISubmitOrder>();
+        });
+
+        services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sample.Api", Version = "v1" }); });
+        services.AddControllers();
+    })
     .Build();
 
 
