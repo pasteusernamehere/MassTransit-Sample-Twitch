@@ -1,8 +1,5 @@
 using MassTransit;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Sample.Api;
 using Sample.Contracts;

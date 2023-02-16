@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Linq;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,7 +1,5 @@
 namespace Sample.Contracts;
 
-using System;
-
 public interface IOrderSubmissionRejected
 {
     Guid OrderId { get; }

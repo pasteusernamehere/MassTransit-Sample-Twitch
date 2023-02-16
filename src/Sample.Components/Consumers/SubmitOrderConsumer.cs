@@ -1,6 +1,5 @@
 namespace Sample.Components.Consumers;
 
-using System.Threading.Tasks;
 using Contracts;
 using MassTransit;
 using Microsoft.Extensions.Logging;

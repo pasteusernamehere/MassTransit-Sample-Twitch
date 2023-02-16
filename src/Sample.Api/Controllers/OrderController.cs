@@ -1,11 +1,8 @@
 namespace Sample.Api.Controllers;
 
-using System;
-using System.Threading.Tasks;
 using Contracts;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 [ApiController]
 [Route("[controller]")]
