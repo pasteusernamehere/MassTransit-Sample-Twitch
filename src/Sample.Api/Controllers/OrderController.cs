@@ -9,12 +9,15 @@ using Microsoft.AspNetCore.Mvc;
 public class OrderController : ControllerBase
 {
     private readonly ILogger<OrderController> _logger;
+    private readonly ISendEndpointProvider _sendEndpointProvider;
     private readonly IRequestClient<ISubmitOrder> _submitOrderRequestClient;
 
-    public OrderController(ILogger<OrderController> logger, IRequestClient<ISubmitOrder> submitOrderRequestClient)
+    public OrderController(ILogger<OrderController> logger, IRequestClient<ISubmitOrder> submitOrderRequestClient,
+        ISendEndpointProvider sendEndpointProvider)
     {
         _logger = logger;
         _submitOrderRequestClient = submitOrderRequestClient;
+        _sendEndpointProvider = sendEndpointProvider;
     }
 
     [HttpPost]
@@ -47,5 +50,20 @@ public class OrderController : ControllerBase
             var response = await rejected;
             return BadRequest(response.Message);
         }
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> Put(Guid id, string customerNumber)
+    {
+        var endpoint = await _sendEndpointProvider.GetSendEndpoint(new Uri("exchange:submit-order"));
+
+        await endpoint.Send<ISubmitOrder>(new
+        {
+            OrderId = id,
+            InVar.Timestamp,
+            CustomerNumber = customerNumber
+        });
+
+        return Accepted();
     }
 }

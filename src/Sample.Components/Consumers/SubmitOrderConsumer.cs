@@ -22,6 +22,12 @@ public class SubmitOrderConsumer : IConsumer<ISubmitOrder>
 
         if (context.Message.CustomerNumber.Contains("TEST"))
         {
+            //If ResponseAddress is null then the requester does not expect response
+            if (context.ResponseAddress == null)
+            {
+                return;
+            }
+            
             await context.RespondAsync<IOrderSubmissionRejected>(new
             {
                 context.Message.OrderId,
@@ -30,6 +36,12 @@ public class SubmitOrderConsumer : IConsumer<ISubmitOrder>
                 Reason = $"Test Customer cannot submit orders: {context.Message.CustomerNumber}"
             });
 
+            return;
+        }
+        
+        //If ResponseAddress is null then the requester does not expect response
+        if (context.ResponseAddress == null)
+        {
             return;
         }
 
