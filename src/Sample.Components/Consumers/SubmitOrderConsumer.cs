@@ -27,7 +27,7 @@ public class SubmitOrderConsumer : IConsumer<ISubmitOrder>
             {
                 return;
             }
-            
+
             await context.RespondAsync<IOrderSubmissionRejected>(new
             {
                 context.Message.OrderId,
@@ -38,7 +38,7 @@ public class SubmitOrderConsumer : IConsumer<ISubmitOrder>
 
             return;
         }
-        
+
         //If ResponseAddress is null then the requester does not expect response
         if (context.ResponseAddress == null)
         {
