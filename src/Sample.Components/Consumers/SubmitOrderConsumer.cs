@@ -39,6 +39,13 @@ public class SubmitOrderConsumer : IConsumer<ISubmitOrder>
             return;
         }
 
+        await context.Publish<IOrderSubmitted>(new
+        {
+            context.Message.OrderId,
+            context.Message.Timestamp,
+            context.Message.CustomerNumber
+        });
+
         //If ResponseAddress is null then the requester does not expect response
         if (context.ResponseAddress == null)
         {

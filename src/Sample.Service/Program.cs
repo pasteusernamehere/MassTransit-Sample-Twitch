@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Sample.Components.Consumers;
+using Sample.Components.StateMachines;
 
 var isService = !(Debugger.IsAttached || args.Contains("--console"));
 
@@ -25,6 +26,9 @@ var builder = new HostBuilder().ConfigureAppConfiguration((hostingContext, confi
         services.AddMassTransit(x =>
         {
             x.AddConsumersFromNamespaceContaining<SubmitOrderConsumer>();
+            x.AddSagaStateMachine<OrderStateMachine, OrderState>()
+                .RedisRepository("127.0.0.1");
+
             x.UsingRabbitMq((context, cfg) =>
             {
                 cfg.Host("localhost", "/", h =>
@@ -45,7 +49,9 @@ var builder = new HostBuilder().ConfigureAppConfiguration((hostingContext, confi
 
 if (isService)
 {
-    await builder.UseWindowsService().Build().RunAsync();
+    await builder.UseWindowsService()
+        .Build()
+        .RunAsync();
 }
 else
 {
