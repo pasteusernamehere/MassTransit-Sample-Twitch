@@ -20,3 +20,9 @@ services:
           - "CMD"
           - "rabbitmqctl"
           - "status"
+  redis:
+      image: redis
+      networks:
+      - twitch
+      ports:
+        - "6379:6379"
