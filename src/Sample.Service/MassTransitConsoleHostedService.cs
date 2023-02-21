@@ -14,7 +14,8 @@ public class MassTransitConsoleHostedService : IHostedService
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        await _bus.StartAsync(cancellationToken).ConfigureAwait(false);
+        await _bus.StartAsync(cancellationToken)
+            .ConfigureAwait(false);
     }
 
     public Task StopAsync(CancellationToken cancellationToken)
