@@ -8,16 +8,26 @@ using Microsoft.AspNetCore.Mvc;
 [Route("[controller]")]
 public class OrderController : ControllerBase
 {
+    private readonly IRequestClient<ICheckOrder> _checkOrderClient;
     private readonly ILogger<OrderController> _logger;
     private readonly ISendEndpointProvider _sendEndpointProvider;
     private readonly IRequestClient<ISubmitOrder> _submitOrderRequestClient;
 
     public OrderController(ILogger<OrderController> logger, IRequestClient<ISubmitOrder> submitOrderRequestClient,
-        ISendEndpointProvider sendEndpointProvider)
+        ISendEndpointProvider sendEndpointProvider, IRequestClient<ICheckOrder> checkOrderClient)
     {
         _logger = logger;
         _submitOrderRequestClient = submitOrderRequestClient;
         _sendEndpointProvider = sendEndpointProvider;
+        _checkOrderClient = checkOrderClient;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Get(Guid id)
+    {
+        var response = await _checkOrderClient.GetResponse<IOrderStatus>(new { OrderId = id });
+
+        return Ok(response.Message);
     }
 
     [HttpPost]

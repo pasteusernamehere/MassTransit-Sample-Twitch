@@ -7,16 +7,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Sample.Contracts\Sample.Contracts.csproj"/>
+        <ProjectReference Include="..\Sample.Contracts\Sample.Contracts.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="MassTransit" Version="8.0.12"/>
+        <PackageReference Include="MassTransit" Version="8.0.12" />
         <PackageReference Include="MassTransit.Analyzers" Version="8.0.12">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="MassTransit.Redis" Version="8.0.12"/>
+        <PackageReference Include="MassTransit.Redis" Version="8.0.12" />
     </ItemGroup>
 
 </Project>

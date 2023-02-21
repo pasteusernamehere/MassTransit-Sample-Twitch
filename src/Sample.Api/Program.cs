@@ -23,6 +23,7 @@ var app = WebApplication.CreateBuilder(args)
             });
 
             x.AddRequestClient<ISubmitOrder>();
+            x.AddRequestClient<ICheckOrder>();
         });
 
         services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sample.Api", Version = "v1" }); });
